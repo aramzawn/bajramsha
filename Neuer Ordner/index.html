@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Blumenstrauß</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #ffffff; /* Weiß */
+            font-family: Arial, sans-serif;
+        }
+        .flower-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 300px;
+            height: 500px;
+            cursor: pointer;
+        }
+        .flower-container img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: gold;
+            border-radius: 50%;
+            animation: sparkle 1s linear infinite;
+        }
+        @keyframes sparkle {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+        .text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 48px;
+            color: #004d00; /* Königlich Dunkelgrün */
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="text">I love you</div>
+    <div class="flower-container">
+        <img src="Tulpe.png" id="flower" alt="Blume">
+    </div>
+
+    <script>
+        const flowers = ["Tulpe.png", "Rose.png"];
+        let activeIndex = 0;
+
+        const flowerContainer = document.querySelector('.flower-container');
+        const flowerImg = document.getElementById('flower');
+
+        flowerContainer.addEventListener('click', (e) => {
+            activeIndex = (activeIndex + 1) % flowers.length;
+            flowerImg.src = flowers[activeIndex];
+            createSparkles(e.clientX, e.clientY);
+        });
+
+        function createSparkles(x, y) {
+            const sparkleContainer = document.createElement('div');
+            sparkleContainer.style.position = 'absolute';
+            sparkleContainer.style.left = `${x}px`;
+            sparkleContainer.style.top = `${y}px`;
+
+            for (let i = 0; i < 10; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.left = `${Math.random() * 50 - 25}px`;
+                sparkle.style.top = `${Math.random() * 50 - 25}px`;
+                sparkleContainer.appendChild(sparkle);
+            }
+
+            document.body.appendChild(sparkleContainer);
+
+            setTimeout(() => {
+                sparkleContainer.remove();
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
